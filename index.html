@@ -312,13 +312,13 @@
         const formatNumber = (number) => new Intl.NumberFormat('en-US').format(Math.round(number));
         const formatCurrency = (value, currencySymbol) => `${currencySymbol}${formatNumber(value)}`;
 
-        const sendDataToGoogleSheet = async (carPrice, dealer, link, calculatedPrice, exchangeRate, calculationId) => {
+        const sendDataToGoogleSheet = async (carPrice, dealer, link, calculatedPrice, rawExchangeRate, calculationId) => {
             const numberOfDigits = carPrice.toString().replace(/[^0-9]/g, '').length;
             const convertedCarPrice = numberOfDigits < 7 ? carPrice * 10000 : carPrice;
 
             const formattedCarPrice = `₩${formatNumber(convertedCarPrice)}`;
             const formattedPrice = `$${formatNumber(calculatedPrice)}`;
-            const formattedExchangeRate = formatCurrency(exchangeRate, '₩');
+            const formattedRawExchangeRate = formatCurrency(rawExchangeRate, '₩');
 
             const formatDate = (date) => {
                 const day = String(date.getDate()).padStart(2, '0');
@@ -334,7 +334,7 @@
                 dealer: dealer,
                 link: link,
                 calculatedPrice: formattedPrice,
-                exchangeRate: formattedExchangeRate,
+                exchangeRate: formattedRawExchangeRate,
                 calculationId: calculationId,
                 timestamp: timestamp
             };
@@ -461,7 +461,7 @@
                 const uniqueID = Math.random().toString(36).substring(2, 9).toUpperCase();
                 document.getElementById('calculationID').textContent = uniqueID;
 
-                sendDataToGoogleSheet(D2, F2, '', finalPriceUSD, KRWUSD, uniqueID);
+                sendDataToGoogleSheet(D2, F2, '', finalPriceUSD, rawExchangeRate, uniqueID);
 
             } catch (error) {
                 console.error('Xarici valyuta məzənnəsi alınarkən səhv baş verdi:', error);
