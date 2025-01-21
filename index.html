@@ -376,11 +376,12 @@
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
 
-		// Fetch KRW/USD rate and apply a 15₩ subtraction
-    		let KRWUSD = data.conversion_rates.KRW;
-   		KRWUSD -= 4; //
+		// Fetch KRW/USD rate
+        	const rawExchangeRate = data.conversion_rates.KRW;
+        	const adjustedExchangeRate = rawExchangeRate - 15; // Subtract 15 KRW for calculations
 
-                const adjustedBasePriceUSD = adjustedBasePrice / KRWUSD;
+
+                const adjustedBasePriceUSD = adjustedBasePrice / adjustedExchangeRate;
 
                 let feePercent = 0;
                 let adjustment = 0;
@@ -453,9 +454,9 @@
                 document.getElementById('priceValue').textContent = `$${formattedPrice}`;
                 document.getElementById('result').classList.remove('error');
 
-                // Format and display the exchange rate
-                const formattedExchangeRate = formatNumber(KRWUSD);
-                document.getElementById('exchangeRate').textContent = `₩${formattedExchangeRate}`;
+                // Display raw exchange rate
+        	const formattedRawExchangeRate = formatCurrency(rawExchangeRate, '₩');
+        	document.getElementById('exchangeRate').textContent = formattedRawExchangeRate;
 
                 const uniqueID = Math.random().toString(36).substring(2, 9).toUpperCase();
                 document.getElementById('calculationID').textContent = uniqueID;
