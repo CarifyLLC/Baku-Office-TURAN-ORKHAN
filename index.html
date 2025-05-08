@@ -378,7 +378,7 @@
 
 		// Fetch KRW/USD rate
         	const rawExchangeRate = data.conversion_rates.KRW;
-        	const adjustedExchangeRate = rawExchangeRate - 12; // Subtract 15 KRW for calculations
+        	const adjustedExchangeRate = rawExchangeRate - 5; // Subtract 15 KRW for calculations
 
 
                 const adjustedBasePriceUSD = adjustedBasePrice / adjustedExchangeRate;
@@ -393,10 +393,10 @@
                     if (F2 === "Ofis") {
                         if (adjustedBasePriceUSD <= 7500) {
                             feePercent = 0.03;
-                            adjustment = 250;
+                            adjustment = 200;
                         } else if (adjustedBasePriceUSD > 7500 && adjustedBasePriceUSD <= 12000) {
                             feePercent = 0.03;
-                            adjustment = 250;
+                            adjustment = 200;
                         } else if (adjustedBasePriceUSD > 12000 && adjustedBasePriceUSD <= 20000) {
                             feePercent = 0.03;
                             adjustment = 200;
@@ -407,16 +407,16 @@
                     } else if (F2 === "Menecer") {
                         if (adjustedBasePriceUSD <= 7500) {
                             feePercent = 0.03;
-                            adjustment = 650;
+                            adjustment = 450;
                         } else if (adjustedBasePriceUSD > 7500 && adjustedBasePriceUSD <= 12000) {
                             feePercent = 0.03;
-                            adjustment = 600;
+                            adjustment = 500;
                         } else if (adjustedBasePriceUSD > 12000 && adjustedBasePriceUSD <= 20000) {
                             feePercent = 0.03;
-                            adjustment = 650;
+                            adjustment = 600;
                         } else if (adjustedBasePriceUSD > 20000) {
                             feePercent = 0.04;
-                            adjustment = 700;
+                            adjustment = 650;
                         }
                     }
                     const feeAmount = adjustedBasePriceUSD / 1.1 * feePercent;
